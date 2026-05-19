@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 [[ $EUID -eq 0 ]] || { echo "Run as root."; exit 1; }
 [[ -d /sys/firmware/efi ]] || { echo "UEFI boot required."; exit 1; }
-ping -c1 -W3 archlinux.org &>/dev/null || { echo "No internet connection."; exit 1; }
+curl -sf --max-time 5 https://archlinux.org &>/dev/null || { echo "No internet connection."; exit 1; }
 
 pacman -Sy --noconfirm --needed git rsync
 

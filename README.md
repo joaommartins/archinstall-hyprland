@@ -1,5 +1,8 @@
 # archinstall-hyprland
 
+> **Warning**
+> This configuration was generated based on a working EndeavourOS/Hyprland setup and has not been tested as an installer. Use it as a reference or starting point, and expect to debug.
+
 Automated Arch Linux installation with a Hyprland desktop, driven by [archinstall](https://github.com/archlinux/archinstall).
 
 ## What gets installed

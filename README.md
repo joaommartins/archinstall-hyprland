@@ -4,11 +4,11 @@ Automated Arch Linux installation with a Hyprland desktop, driven by [archinstal
 
 ## What gets installed
 
-- **Base system:** GRUB, btrfs root (subvolumes `@`, `@home`, `@snapshots`, `@var_log`), NetworkManager, pipewire
+- **Base system:** GRUB, btrfs root (subvolumes `@`, `@home`, `@var_log`), NetworkManager, pipewire
 - **Desktop:** Hyprland, hyprlock, hypridle, noctalia-shell, greetd + tuigreet
 - **Apps:** ghostty, firefox, helix, thunar, yazi, zed, vlc, and more
-- **AUR:** `greetd-tuigreet`, `hyprlight`, `noctalia-qs`, `noctalia-shell`
-- **Configs:** deployed from [joaommartins/endeavouros-hyprland](https://github.com/joaommartins/endeavouros-hyprland)
+- **AUR:** `greetd-tuigreet`, `grub-btrfs`, `hyprlight`, `noctalia-qs`, `noctalia-shell`, `timeshift-autosnap`
+- **Configs:** deployed from this repo (`.config/hypr/`, `etc/`)
 
 ## Requirements
 
@@ -55,7 +55,7 @@ cd archinstall-hyprland
 bash run.sh
 ```
 
-This calls archinstall, then runs `post-install.sh` inside the new system via `arch-chroot` to install AUR packages and deploy configs.
+This calls archinstall, then copies the repo into the new system and runs `post-install.sh` via `arch-chroot`.
 
 **4.** Remove the installation media and reboot.
 
@@ -74,17 +74,19 @@ btrfs subvolumes, all mounted with `noatime,compress=zstd,space_cache=v2`:
 | `@home` | `/home` |
 | `@var_log` | `/var/log` |
 
-Timeshift (btrfs mode) manages its own snapshot subvolumes directly at the pool root — no pre-created snapshots subvolume is needed.
+Timeshift (btrfs mode) manages its own snapshot subvolumes directly at the pool root.
 
 ## Post-install
 
 `post-install.sh` runs inside the installed system after archinstall exits:
 
-1. Builds and installs `yay` from the AUR
-2. Installs AUR packages
-3. Clones [joaommartins/endeavouros-hyprland](https://github.com/joaommartins/endeavouros-hyprland) and deploys `.config/hypr/` and `etc/` configs
-4. Disables any greeter installed by archinstall, enables `greetd`
-5. Sets `zsh` as the default shell
+1. Builds and installs `yay`
+2. Installs AUR packages (`greetd-tuigreet`, `grub-btrfs`, `hyprlight`, `noctalia-qs`, `noctalia-shell`, `timeshift-autosnap`)
+3. Deploys `.config/hypr/` and `etc/` configs from this repo
+4. Enables services: `greetd`, `grub-btrfsd`, `bluetooth`, `firewalld`, `avahi-daemon`, `fstrim.timer`, `reflector.timer`
+5. Configures mDNS (`nsswitch.conf` + avahi)
+6. Configures reflector to rank the 10 fastest HTTPS mirrors
+7. Sets `zsh` as the default shell
 
 ## Nvidia
 

@@ -80,6 +80,7 @@
   "offline": false,
   "packages": [
     "accountsservice",
+    "avahi",
     "alsa-firmware",
     "alsa-plugins",
     "alsa-utils",

@@ -25,12 +25,12 @@
             "mountpoint": "/boot/efi",
             "obj_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "size": {
-              "sector_size": {"unit": "B", "value": 512},
+              "sector_size": null,
               "unit": "MiB",
               "value": 512
             },
             "start": {
-              "sector_size": {"unit": "B", "value": 512},
+              "sector_size": null,
               "unit": "MiB",
               "value": 1
             },
@@ -51,12 +51,12 @@
             "mountpoint": "/",
             "obj_id": "b1c2d3e4-f5a6-8901-bcde-f01234567891",
             "size": {
-              "sector_size": {"unit": "B", "value": 512},
+              "sector_size": null,
               "unit": "Percent",
               "value": 100
             },
             "start": {
-              "sector_size": {"unit": "B", "value": 512},
+              "sector_size": null,
               "unit": "MiB",
               "value": 513
             },
@@ -81,6 +81,7 @@
   "no_pkg_lookups": false,
   "ntp": true,
   "offline": false,
+  "parallel downloads": 0,
   "packages": [
     "accountsservice",
     "avahi",

@@ -16,10 +16,10 @@ read -rp "Press Enter when ready..."
 archinstall --config "$SCRIPT_DIR/user_configuration.json" \
             --creds  "$SCRIPT_DIR/user_credentials.json"
 
-# archinstall leaves /mnt mounted — run post-install inside the new system
-cp "$SCRIPT_DIR/post-install.sh" /mnt/root/post-install.sh
-arch-chroot /mnt /root/post-install.sh
-rm -f /mnt/root/post-install.sh
+# archinstall leaves /mnt mounted — copy repo into the new system and run post-install
+cp -r "$SCRIPT_DIR" /mnt/root/arch-setup
+arch-chroot /mnt /root/arch-setup/post-install.sh
+rm -rf /mnt/root/arch-setup
 
 echo ""
 echo "Done. Remove installation media and reboot."

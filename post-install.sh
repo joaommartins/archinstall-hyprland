@@ -30,11 +30,10 @@ sudo -u "$USERNAME" yay -S --noconfirm --needed \
 rm -f /etc/sudoers.d/yay-temp
 
 step "Deploying Hyprland configs"
-git clone https://github.com/joaommartins/endeavouros-hyprland.git /tmp/hcfg
-rsync -a /tmp/hcfg/.config/ "/home/$USERNAME/.config/"
-rsync -a --chown=root:root /tmp/hcfg/etc/ /etc/
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+rsync -a "$SCRIPT_DIR/.config/" "/home/$USERNAME/.config/"
+rsync -a --chown=root:root "$SCRIPT_DIR/etc/" /etc/
 chown -R "$USERNAME:$USERNAME" "/home/$USERNAME"
-rm -rf /tmp/hcfg
 
 step "Configuring display manager (greetd)"
 systemctl disable sddm lightdm gdm 2>/dev/null || true

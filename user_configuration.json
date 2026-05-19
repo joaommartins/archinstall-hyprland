@@ -220,7 +220,14 @@
     "profile": {}
   },
   "script": null,
-  "services": [],
+  "services": [
+    "avahi-daemon",
+    "bluetooth",
+    "firewalld",
+    "fstrim.timer",
+    "greetd",
+    "reflector.timer"
+  ],
   "swap": {
     "algorithm": "zstd",
     "enabled": true

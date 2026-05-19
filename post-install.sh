@@ -35,18 +35,8 @@ rsync -a "$SCRIPT_DIR/.config/" "/home/$USERNAME/.config/"
 rsync -a --chown=root:root "$SCRIPT_DIR/etc/" /etc/
 chown -R "$USERNAME:$USERNAME" "/home/$USERNAME"
 
-step "Configuring display manager (greetd)"
-systemctl disable sddm lightdm gdm 2>/dev/null || true
-systemctl enable greetd
-
 step "Enabling grub-btrfsd snapshot watcher"
 systemctl enable grub-btrfsd
-
-step "Enabling services"
-systemctl enable bluetooth
-systemctl enable firewalld
-systemctl enable avahi-daemon
-systemctl enable fstrim.timer
 
 step "Configuring mDNS (avahi + nss-mdns)"
 sed -i 's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' /etc/nsswitch.conf
@@ -58,7 +48,6 @@ cat > /etc/xdg/reflector/reflector.conf <<EOF
 --latest 10
 --sort rate
 EOF
-systemctl enable reflector.timer
 
 step "Setting zsh as default shell"
 chsh -s /usr/bin/zsh "$USERNAME"

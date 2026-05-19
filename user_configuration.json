@@ -18,6 +18,7 @@
         "partitions": [
           {
             "btrfs": [],
+            "dev_path": null,
             "flags": ["boot"],
             "fs_type": "fat32",
             "mount_options": [],
@@ -38,10 +39,12 @@
           },
           {
             "btrfs": [
-              {"name": "@",        "mountpoint": "/"},
-              {"name": "@home",    "mountpoint": "/home"},
-              {"name": "@var_log", "mountpoint": "/var/log"}
+              {"name": "@",          "mountpoint": "/"},
+              {"name": "@home",      "mountpoint": "/home"},
+              {"name": "@var_cache", "mountpoint": "/var/cache"},
+              {"name": "@var_log",   "mountpoint": "/var/log"}
             ],
+            "dev_path": null,
             "flags": [],
             "fs_type": "btrfs",
             "mount_options": ["noatime", "compress=zstd", "space_cache=v2"],

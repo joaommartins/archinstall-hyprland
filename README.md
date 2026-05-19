@@ -7,7 +7,7 @@ Automated Arch Linux installation with a Hyprland desktop, driven by [archinstal
 
 ## What gets installed
 
-- **Base system:** GRUB, btrfs root (subvolumes `@`, `@home`, `@var_log`), NetworkManager, pipewire
+- **Base system:** GRUB, LUKS-encrypted btrfs root (subvolumes `@`, `@home`, `@log`, `@pkg`), NetworkManager, pipewire
 - **Desktop:** Hyprland, hyprlock, hypridle, noctalia-shell, greetd + tuigreet
 - **Apps:** ghostty, firefox, helix, thunar, yazi, zed, vlc, and more
 - **AUR:** `greetd-tuigreet`, `grub-btrfs`, `hyprlight`, `noctalia-qs`, `noctalia-shell`, `timeshift-autosnap`
@@ -38,15 +38,35 @@ cd archinstall-hyprland
 | `timezone` | `Europe/London` | e.g. `America/New_York` |
 | `locale_config.kb_layout` | `us` | |
 
-**2. Set credentials** by creating `user_credentials.json` (gitignored):
+**2. Set credentials** by copying the example and editing it:
+
+```bash
+cp user_credentials.example.json user_credentials.json
+```
+
+Generate encrypted password hashes with `mkpasswd` (from the `whois` package, pre-installed on the Arch ISO):
+
+```bash
+mkpasswd -m yescrypt
+# Enter your password when prompted — copy the $y$... hash into the JSON
+```
+
+Or with `openssl` (SHA-512, also accepted by archinstall):
+
+```bash
+openssl passwd -6
+```
+
+Edit `user_credentials.json` and replace both hash fields with your generated hash:
 
 ```json
 {
-  "root_enc_password": "yourpassword",
+  "root_enc_password": "$y$j9T$...",
   "users": [
     {
       "username": "yourusername",
-      "enc_password": "yourpassword",
+      "enc_password": "$y$j9T$...",
+      "groups": [],
       "sudo": true
     }
   ]
@@ -67,16 +87,17 @@ This calls archinstall, then copies the repo into the new system and runs `post-
 
 | Partition | Size | Format | Mount |
 |---|---|---|---|
-| EFI | 512 MiB | FAT32 | `/boot/efi` |
-| Root | Remaining | btrfs | — |
+| EFI | 1 GiB | FAT32 | `/boot` |
+| Root | Remaining | btrfs (LUKS) | — |
 
-btrfs subvolumes, all mounted with `noatime,compress=zstd,space_cache=v2`:
+btrfs subvolumes, all mounted with `compress=zstd`:
 
 | Subvolume | Mount |
 |---|---|
 | `@` | `/` |
 | `@home` | `/home` |
-| `@var_log` | `/var/log` |
+| `@log` | `/var/log` |
+| `@pkg` | `/var/cache/pacman/pkg` |
 
 Timeshift (btrfs mode) manages its own snapshot subvolumes directly at the pool root.
 

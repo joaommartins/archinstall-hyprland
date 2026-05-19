@@ -1,16 +1,19 @@
 {
+  "app_config": {},
   "archinstall-language": "English",
-  "audio_config": {
-    "audio": "pipewire"
-  },
+  "auth_config": {},
   "bootloader_config": {
     "bootloader": "Grub",
-    "uki": false,
-    "removable": false
+    "removable": true,
+    "uki": true
   },
-  "custom-commands": [],
-  "debug": false,
+  "custom_commands": [],
   "disk_config": {
+    "btrfs_options": {
+      "snapshot_config": {
+        "type": "Timeshift"
+      }
+    },
     "config_type": "default_layout",
     "device_modifications": [
       {
@@ -19,20 +22,18 @@
           {
             "btrfs": [],
             "dev_path": null,
-            "flags": ["boot"],
+            "flags": ["boot", "esp"],
             "fs_type": "fat32",
             "mount_options": [],
-            "mountpoint": "/boot/efi",
+            "mountpoint": "/boot",
             "obj_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "size": {
-              "sector_size": {"sector_size": null, "total_size": null, "unit": "B", "value": 512},
-              "total_size": null,
-              "unit": "MiB",
-              "value": 512
+              "sector_size": {"unit": "B", "value": 512},
+              "unit": "GiB",
+              "value": 1
             },
             "start": {
-              "sector_size": {"sector_size": null, "total_size": null, "unit": "B", "value": 512},
-              "total_size": null,
+              "sector_size": {"unit": "B", "value": 512},
               "unit": "MiB",
               "value": 1
             },
@@ -41,28 +42,26 @@
           },
           {
             "btrfs": [
-              {"name": "@",          "mountpoint": "/"},
-              {"name": "@home",      "mountpoint": "/home"},
-              {"name": "@var_cache", "mountpoint": "/var/cache"},
-              {"name": "@var_log",   "mountpoint": "/var/log"}
+              {"name": "@",    "mountpoint": "/"},
+              {"name": "@home","mountpoint": "/home"},
+              {"name": "@log", "mountpoint": "/var/log"},
+              {"name": "@pkg", "mountpoint": "/var/cache/pacman/pkg"}
             ],
             "dev_path": null,
             "flags": [],
             "fs_type": "btrfs",
-            "mount_options": ["noatime", "compress=zstd", "space_cache=v2"],
-            "mountpoint": "/",
+            "mount_options": ["compress=zstd"],
+            "mountpoint": null,
             "obj_id": "b1c2d3e4-f5a6-8901-bcde-f01234567891",
             "size": {
-              "sector_size": {"sector_size": null, "total_size": null, "unit": "B", "value": 512},
-              "total_size": null,
+              "sector_size": {"unit": "B", "value": 512},
               "unit": "Percent",
               "value": 100
             },
             "start": {
-              "sector_size": {"sector_size": null, "total_size": null, "unit": "B", "value": 512},
-              "total_size": null,
+              "sector_size": {"unit": "B", "value": 512},
               "unit": "MiB",
-              "value": 513
+              "value": 1025
             },
             "status": "create",
             "type": "primary"
@@ -70,7 +69,14 @@
         ],
         "wipe": true
       }
-    ]
+    ],
+    "disk_encryption": {
+      "encryption_type": "luks",
+      "lvm_volumes": [],
+      "partitions": [
+        "b1c2d3e4-f5a6-8901-bcde-f01234567891"
+      ]
+    }
   },
   "hostname": "archlinux",
   "kernels": ["linux"],
@@ -79,13 +85,16 @@
     "sys_enc": "UTF-8",
     "sys_lang": "en_US"
   },
+  "mirror_config": {
+    "custom_repositories": [],
+    "custom_servers": [],
+    "mirror_regions": {},
+    "optional_repositories": ["multilib"]
+  },
   "network_config": {
     "type": "nm"
   },
-  "no_pkg_lookups": false,
   "ntp": true,
-  "offline": false,
-  "parallel downloads": 0,
   "packages": [
     "accountsservice",
     "avahi",
@@ -201,13 +210,21 @@
     "zoxide",
     "zsh"
   ],
-  "profile_config": null,
-  "script": "guided",
-  "silent": false,
+  "pacman_config": {
+    "color": true,
+    "parallel_downloads": 5
+  },
+  "profile_config": {
+    "gfx_driver": null,
+    "greeter": null,
+    "profile": {}
+  },
+  "script": null,
+  "services": [],
   "swap": {
-    "enabled": true,
-    "algorithm": "zstd"
+    "algorithm": "zstd",
+    "enabled": true
   },
   "timezone": "Europe/London",
-  "version": "2.8.6"
+  "version": "4.3"
 }

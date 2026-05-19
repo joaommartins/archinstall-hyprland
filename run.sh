@@ -9,6 +9,8 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 [[ -d /sys/firmware/efi ]] || { echo "UEFI boot required."; exit 1; }
 ping -c1 -W3 archlinux.org &>/dev/null || { echo "No internet connection."; exit 1; }
 
+pacman -Sy --noconfirm --needed git rsync
+
 echo "Edit user_configuration.json (disk, hostname, timezone) and"
 echo "user_credentials.json (username, passwords) before continuing."
 read -rp "Press Enter when ready..."

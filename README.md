@@ -24,6 +24,7 @@ Automated Arch Linux installation with a Hyprland desktop, driven by [archinstal
 Boot the Arch live ISO, then:
 
 ```bash
+pacman -Sy git
 git clone https://github.com/joaommartins/archinstall-hyprland.git
 cd archinstall-hyprland
 ```

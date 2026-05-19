@@ -38,10 +38,9 @@
           },
           {
             "btrfs": [
-              {"name": "@",          "mountpoint": "/"},
-              {"name": "@home",      "mountpoint": "/home"},
-              {"name": "@snapshots", "mountpoint": "/.snapshots"},
-              {"name": "@var_log",   "mountpoint": "/var/log"}
+              {"name": "@",        "mountpoint": "/"},
+              {"name": "@home",    "mountpoint": "/home"},
+              {"name": "@var_log", "mountpoint": "/var/log"}
             ],
             "flags": [],
             "fs_type": "btrfs",

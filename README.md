@@ -72,8 +72,9 @@ btrfs subvolumes, all mounted with `noatime,compress=zstd,space_cache=v2`:
 |---|---|
 | `@` | `/` |
 | `@home` | `/home` |
-| `@snapshots` | `/.snapshots` |
 | `@var_log` | `/var/log` |
+
+Timeshift (btrfs mode) manages its own snapshot subvolumes directly at the pool root — no pre-created snapshots subvolume is needed.
 
 ## Post-install
 

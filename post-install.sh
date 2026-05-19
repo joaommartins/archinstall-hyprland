@@ -22,9 +22,11 @@ step "Installing AUR packages"
 echo "$USERNAME ALL=(ALL) NOPASSWD: /usr/bin/pacman" > /etc/sudoers.d/yay-temp
 sudo -u "$USERNAME" yay -S --noconfirm --needed \
     greetd-tuigreet \
+    grub-btrfs \
     hyprlight \
     noctalia-qs \
-    noctalia-shell
+    noctalia-shell \
+    timeshift-autosnap
 rm -f /etc/sudoers.d/yay-temp
 
 step "Deploying Hyprland configs"
@@ -37,6 +39,9 @@ rm -rf /tmp/hcfg
 step "Configuring display manager (greetd)"
 systemctl disable sddm lightdm gdm 2>/dev/null || true
 systemctl enable greetd
+
+step "Enabling grub-btrfsd snapshot watcher"
+systemctl enable grub-btrfsd
 
 step "Setting zsh as default shell"
 chsh -s /usr/bin/zsh "$USERNAME"
